@@ -15,8 +15,8 @@ public class PlayerScript : MonoBehaviour
     public Color[] colors;
     public int colorIntPlayerBullet;
 
-    public Transform target;
-    public float range = 10;
+	public Transform target;
+    public float range = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +34,11 @@ public class PlayerScript : MonoBehaviour
         {
             Shoot();
         }
-        //FIND CHANGE TARGET ROTATE TO TARGET
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
-        foreach (var hitCollider in hitColliders)
+        
+        target = GameObject.FindWithTag("Enemy").transform;
+        if(Vector3.Distance(transform.position, target.position) <= range)
         {
-
-            Vector3 relativePos = target.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-            transform.rotation = rotation;
+        transform.LookAt(target);
         }
     }
 
